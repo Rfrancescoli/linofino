@@ -152,11 +152,33 @@
       });
 
       const data = await response.json();
-      console.log(data);
+      console.log("idpersona: ", data);
+
+      if (data['idpersona'] > 0){
+        await registrarUsuario(parseInt(data['idpersona']));
+      }
     }
 
-    async function registrarUsuario(idpersona = null){
-      
+    async function registrarUsuario(idpersona = null) {
+      const parametros = new FormData();
+
+      parametros.append("operation", "registrarUsuario");
+      parametros.append("idpersona", idpersona);
+      parametros.append("nomusuario", $("#usuario").value); 
+      parametros.append("claveacceso", $("#claveacceso").value);
+      parametros.append("perfil", $("#perfil").value);
+
+      const response = await fetch(`../../app/controllers/Usuario.controller.php`, {
+        method: 'POST',
+        body: parametros
+      });
+
+      const data = await response.json();
+      console.log("idusuario: ", data);
+
+      if (data['idusuario'] > 0) {
+        showToast("Usuario registrado correctamente", "SUCCESS");
+      }
     }
 
     //Evento Registrar Persona
