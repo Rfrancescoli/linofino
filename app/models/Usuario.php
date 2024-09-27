@@ -32,6 +32,11 @@ class Usuario extends Conexion
       return -1;
     }
   }
+
+  
+  public function getAll():array{
+    return parent::getData("spu_usuarios_listar");
+  }
 }
 
 /* $usuario = new Usuario();
@@ -43,4 +48,6 @@ $id = $usuario->registrarUsuario([
   "perfil" => "SUP"
 ]);
 
-echo $id; */
+echo $id; 
+
+var_dump($usuario->getAll());*/

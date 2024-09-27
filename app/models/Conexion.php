@@ -74,6 +74,19 @@ class Conexion{
     return $cadena;
   }
 
+  /**
+   * Retorna una colección de datos de la fuente (SPU) especificada
+   */
+  public function getData($spuName = ""):array{
+    try{
+      $cmd = $this->getConexion()->prepare("call {$spuName}()");
+      $cmd->execute();
+      return $cmd->fetchAll(PDO::FETCH_ASSOC);
+    }catch(Exception $e){
+      error_log("Error: " . $e->getMessage());
+    }
+  }
+
 }
 
 /* $entrada = "<script>alert('Hey que pasa')</script><h1>SENATI</h1>";

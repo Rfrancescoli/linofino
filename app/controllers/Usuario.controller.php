@@ -7,7 +7,8 @@ header("Content-type: application/json; charset=utf-8");
 
 if(isset($_GET['operation'])){
   switch ($_GET['operation']){
-    case '':
+    case 'getAll':
+      echo json_encode($usuario->getAll());
       break;
   }
 }

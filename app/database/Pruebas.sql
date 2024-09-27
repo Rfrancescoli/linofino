@@ -6,5 +6,7 @@ SELECT @idpersona AS 'idpersona';
 CALL spu_usuarios_registrar(@idusuario, 1, 'ruben', '123456789', 'ADM');
 SELECT @idusuario AS 'idusuario';
 
+CALL spu_usuarios_listar();
+
 SELECT * FROM personas;
 SELECT * FROM usuarios;

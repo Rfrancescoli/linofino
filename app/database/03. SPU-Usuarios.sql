@@ -27,3 +27,17 @@ BEGIN
 		SET _idusuario = LAST_INSERT_ID();
     END IF;
 END //
+
+
+DROP PROCEDURE IF EXISTS `spu_usuarios_listar`;
+DELIMITER //
+CREATE PROCEDURE `spu_usuarios_listar`()
+BEGIN
+	SELECT
+		US.idusuario,
+        PE.apellidos, PE.nombres, PE.telefono, PE.dni,
+        US.nomusuario, US.perfil
+		FROM usuarios US
+		INNER JOIN personas PE ON PE.idpersona = US.idpersona
+		ORDER BY US.idusuario DESC;
+END //
