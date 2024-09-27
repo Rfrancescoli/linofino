@@ -1,3 +1,7 @@
 USE linofino;
 
-CALL spu_personas_registrar(@idpersona, 'Marcos Gereda', 'Rubén', '981369757', '75918562', '');
+CALL spu_personas_registrar(@idpersona, 'Contreras Anicama', 'Luis', '987654321', '87654321', '');
+SELECT @idpersona AS 'idpersona';
+
+
+SELECT * FROM personas;

@@ -15,23 +15,36 @@ class Persona extends Conexion
   // Método para registrar una persona
   public function registrarPersona($params = []):int
   {
-    $idgenerado = null;
     try {
       $cmd = $this->pdo->prepare("CALL spu_personas_registrar(@idpersona,?,?,?,?,?)");
-      $cmd->execute([
-        $array['apellidos'],
-        $array['nombres'],
-        $array['telefono'],
-        $array['dni'],
-        $array['direccion'] ?? NULL,
-      ]);
+      $cmd->execute(
+        array(
+          $params['apellidos'],
+          $params['nombres'],
+          $params['telefono'],
+          $params['dni'],
+          $params['direccion']
+        )
+      );
 
-      $row = $cmd->fetch(PDO::FETCH_ASSOC);
-      $idgenerado = $row['idpersona'];
+      // Actualización: capturamos el valor de salida OUT
+      $response = $this->pdo->query("SELECT @idpersona AS idpersona")->fetch(PDO::FETCH_ASSOC);
+      return (int) $response['idpersona'];
     } catch (Exception $e) {
       error_log("Error: " . $e->getMessage());
-      return = -1;
+      return -1;
     }
-    return $idgenerado;
   }
 }
+
+/* $persona = new Persona();
+
+$id = $persona->registrarPersona([
+  "apellidos" => "Flroes Atuncar",
+  "nombres" => "Cristina",
+  "telefono"  => "987524163",
+  "dni" => "45454545",
+  "direccion" => ""
+]);
+
+echo $id;  */

@@ -21,4 +21,8 @@
 <script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js" crossorigin="anonymous"></script>
 <!-- <script src="http://localhost/linofino/js/datatables-simple-demo.js"></script> -->
 
+<!-- Sweet Alert -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<!-- Librería que simplifica Sweet Alert -->
+<script src="http://localhost/linofino/js/swalcustom.js"></script>
 <!-- En esta sección se puede ontegrar nueva lógica JS de cada vista -->
