@@ -35,7 +35,7 @@ CREATE PROCEDURE `spu_usuarios_listar`()
 BEGIN
 	SELECT
 		US.idusuario,
-        PE.apellidos, PE.nombres, PE.telefono, PE.dni,
+        PE.apellidos, PE.nombres, PE.telefono, PE.dni, PE.direccion,
         US.nomusuario, US.perfil
 		FROM usuarios US
 		INNER JOIN personas PE ON PE.idpersona = US.idpersona
