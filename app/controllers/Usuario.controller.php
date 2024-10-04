@@ -1,7 +1,18 @@
 <?php
 session_start();
 
-// Guardar la configuraci~n de inicio de sesión
+// IO JSON
+header("Content-type: application/json; charset=utf-8");
+
+// Determina las vitas las cuales podrá utilizar
+// Producción, pagos, tareas, usuarios, reporte-produccion, reporte-fechas
+$accesos = [
+  "ADM" => ["produccion", "pagos", "tareas", "usuarios", "reporte-produccion", "reporte-fechas"],
+  "COL" => ["produccion", "tareas", "reporte-produccion"],
+  "SUP" => ["tareas"]
+];
+
+// Guardar la configuración de inicio de sesión
 if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
   $sesion = [
     "estado"      => false,
@@ -11,14 +22,13 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
     "nombres"     => "",
     "nomusuario"  => "",
     "claveacceso" => "",
-    "perfil"      => ""
+    "perfil"      => "",
+    "accesos"     => []
   ];
 }
 
 require_once '../models/Usuario.php';
 $usuario = new Usuario();
-
-header("Content-type: application/json; charset=utf-8");
 
 if (isset($_GET['operation'])) {
   switch ($_GET['operation']) {
@@ -75,6 +85,7 @@ if (isset($_POST['operation'])) {
           $sesion["nomusuario"] = $registro[0]['nomusuario'];
           $sesion["claveacceso"] = $registro[0]['claveacceso'];
           $sesion["perfil"] = $registro[0]['perfil'];
+          $sesion["accesos"] = $accesos[$registro[0]['perfil']];
 
           $_SESSION['login'] = $sesion;
         } else {
@@ -92,6 +103,7 @@ if (isset($_POST['operation'])) {
 
       $_SESSION ['login'] = $sesion;
       echo json_encode($resultados);
+      //echo json_encode($_SESSION['login']);
       break;
   }
 }

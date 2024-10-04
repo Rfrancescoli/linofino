@@ -7,7 +7,7 @@ if (isset($_SESSION['login']) && $_SESSION['login']['estado']){
 ?>
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8" />
