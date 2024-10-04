@@ -33,14 +33,28 @@ class Usuario extends Conexion
     }
   }
 
-  
+  /* Retorna una lista de usuarios */
   public function getAll():array{
     return parent::getData("spu_usuarios_listar");
   }
+
+  /* Retorna el registro del usuario indicado */
+  public function login($params = []):array{
+    try{
+      $cmd = $this->pdo->prepare("call spu_usuarios_login(?)");
+      $cmd->execute(
+        array($params['nomusuario'])
+      );
+      return $cmd->fetchAll(PDO::FETCH_ASSOC);
+    }catch(Exception $e){
+      error_log("Error: " . $e->getMessage());
+    }
+  }
 }
 
-/* $usuario = new Usuario();
-
+$usuario = new Usuario();
+/* var_dump($usuario->login(['nomusuario' => 'rmarcos@gmail.com']));
+ *//*
 $id = $usuario->registrarUsuario([
   "idpersona" => 1,
   "nomusuario"  => "anicama",

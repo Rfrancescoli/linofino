@@ -1,5 +1,14 @@
+<?php
+session_start();
+
+// Si el usuario NO ha iniciado sesión, entonces se va a LOGIN
+if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false){
+  header('location:http://localhost/linofino');
+}
+?>
+
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
   <meta charset="utf-8" />
@@ -36,7 +45,7 @@
           <li>
             <hr class="dropdown-divider" />
           </li>
-          <li><a class="dropdown-item" href="#!">Logout</a></li>
+          <li><a class="dropdown-item" href="../app/controllers/Usuario.controller.php?operation=destroy">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -73,11 +82,7 @@
               <div class="sb-nav-link-icon"><i class="fa-solid fa-thumbtack"></i></div>
               Tareas
             </a>
-            <a class="nav-link" href="http://localhost/linofino/views/personas">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-person-circle-plus"></i></div>
-              Personas
-            </a>
-            <a class="nav-link" href="tables.html">
+            <a class="nav-link" href="http://localhost/linofino/views/usuarios">
               <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
               Usuarios
             </a>

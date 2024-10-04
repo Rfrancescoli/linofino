@@ -10,3 +10,14 @@ CALL spu_usuarios_listar();
 
 SELECT * FROM personas;
 SELECT * FROM usuarios;
+
+
+SET SQL_SAFE_UPDATES = 0;
+
+DELETE FROM usuarios;
+DELETE FROM personas;
+DELETE FROM usuarios WHERE idusuario IS NOT NULL;
+DELETE FROM personas WHERE idpersona IS NOT NULL;
+
+ALTER TABLE usuarios AUTO_INCREMENT 1;
+ALTER TABLE personas AUTO_INCREMENT 1;

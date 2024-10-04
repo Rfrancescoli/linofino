@@ -74,7 +74,7 @@
                     <option value="">Seleccione</option>
                     <option value="ADM">Administrador</option>
                     <option value="COL">Colaborador</option>
-                    <option value="AST">Supervisor</option>
+                    <option value="SUP">Supervisor</option>
                   </select>                    
                   <label for="usuario">Perfil</label>
                   </div>

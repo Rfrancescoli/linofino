@@ -41,3 +41,24 @@ BEGIN
 		INNER JOIN personas PE ON PE.idpersona = US.idpersona
 		ORDER BY US.idusuario DESC;
 END //
+
+-- Creado: Viernes 04/10/2024
+-- Login (2 pasos)
+-- Step 1: Validar la existencia del usuario (MySQL)
+-- Step 2: Validar la contraseña (depende Step1)
+DROP PROCEDURE IF EXISTS `spu_usuarios_login`;
+DELIMITER //
+CREATE PROCEDURE `spu_usuarios_login` (IN _nomusuario VARCHAR(30))
+BEGIN
+	SELECT 
+		US.idusuario,
+        PE.apellidos, PE.nombres,
+        US.nomusuario,
+        US.claveacceso,
+        US.perfil
+        FROM usuarios US
+        INNER JOIN personas PE ON PE.idpersona = US.idpersona
+        WHERE US.nomusuario = _nomusuario;
+END //
+
+select * from usuarios;
