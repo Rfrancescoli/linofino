@@ -94,7 +94,7 @@ if (isset($_SESSION['login']) && $_SESSION['login']['estado']){
         const data = await response.json();
 
         if (data.login){
-          window.location.href = './views';
+          window.location.href = './views/home';
         }else{
           alert(data.mensaje);
         }

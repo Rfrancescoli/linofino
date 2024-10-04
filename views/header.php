@@ -2,8 +2,40 @@
 session_start();
 
 // Si el usuario NO ha iniciado sesión, entonces se va a LOGIN
-if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false){
+if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
   header('location:http://localhost/linofino');
+} else {
+  // El usuario a ingresado al sistema, solo se le permitirá acceso a las vistas indicadores por su PERFIL
+  $url = $_SERVER['REQUEST_URI'];         // Obtener URL
+  $rutaCompleta = explode("/", $url);     // URL > array()
+  $rutaCompleta = array_filter($rutaCompleta);
+  $totalElementos = count($rutaCompleta);
+  // Buscaremos la vistaActual n la listaAcceso
+  $vistaActual = $rutaCompleta[$totalElementos];
+  $listaAcceso = $_SESSION['login']['accesos'];
+
+  // Verificando permiso
+  /* $encontrado = false;
+  
+  foreach($listaAcceso as $acceso){
+    if ($vistaActual == $acceso){
+      $encontrado = true;
+    }
+  } */
+
+  $encontrado = false;
+  $i = 0;
+  while(($i < count ($listaAcceso)) && !$encontrado){
+    if($listaAcceso[$i] == $vistaActual){
+      $encontrado = true;
+    }
+    $i++;
+  }
+
+  // Validamos si se encontró...
+  if (!$encontrado){
+    header("Location: http://localhost/linofino/views/404.php");
+  }
 }
 ?>
 
@@ -45,7 +77,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false){
           <li>
             <hr class="dropdown-divider" />
           </li>
-          <li><a class="dropdown-item" href="../app/controllers/Usuario.controller.php?operation=destroy">Logout</a></li>
+          <li><a class="dropdown-item" href="http://localhost/linofino/app/controllers/Usuario.controller.php?operation=destroy">Logout</a></li>
         </ul>
       </li>
     </ul>
@@ -60,44 +92,32 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false){
               <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
               Inicio
             </a>
+            <div class="sb-sidenav-menu-heading">Módulos</div>
+            <?php
+            foreach ($listaAcceso as $acceso) {
+              echo "
+              <a class='nav-link' href='http://localhost/linofino/views/{$acceso}'>
+              <div class='sb-nav-link-icon'><i class='fa-solid fa-plug-circle-check'></i></div>
+              {$acceso}
+            </a>
+              ";
+            }
+            ?>
 
             <!-- Menú de procesos -->
-            <div class="sb-sidenav-menu-heading">Procesos</div>
-            <a class="nav-link" href="http://localhost/linofino/views/produccion">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-plug-circle-check"></i></div>
-              Producción
-            </a>
-
-            <a class="nav-link" href="http://localhost/linofino/views/pagos">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-wallet"></i></div>
-              Pagos
-            </a>
+            <!-- <div class="sb-sidenav-menu-heading">Procesos</div> -->
 
             <!-- Fin menú de procesos -->
 
             <!-- Menú módulos de sistema -->
 
-            <div class="sb-sidenav-menu-heading">Addons</div>
-            <a class="nav-link" href="http://localhost/linofino/views/tareas">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-thumbtack"></i></div>
-              Tareas
-            </a>
-            <a class="nav-link" href="http://localhost/linofino/views/usuarios">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-users"></i></div>
-              Usuarios
-            </a>
+            <!-- <div class="sb-sidenav-menu-heading">Addons</div> -->
 
             <!-- Fin menú módulos de sistema -->
 
-            <div class="sb-sidenav-menu-heading">Reportes</div>
-            <a class="nav-link" href="http://localhost/linofino/views/reporte-produccion">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-chart-line"></i></div>
-              Producción personal
-            </a>
-            <a class="nav-link" href="http://localhost/linofino/views/reporte-fechas">
-              <div class="sb-nav-link-icon"><i class="fa-solid fa-calendar-days"></i></div>
-              Intervalo fechas
-            </a>
+            <!-- Menú reportes -->
+            <!-- <div class="sb-sidenav-menu-heading">Reportes</div> -->
+            <!-- Fin menú reportes -->
 
           </div>
         </div>

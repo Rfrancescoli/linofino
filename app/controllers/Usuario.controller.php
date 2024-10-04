@@ -7,9 +7,9 @@ header("Content-type: application/json; charset=utf-8");
 // Determina las vitas las cuales podrá utilizar
 // Producción, pagos, tareas, usuarios, reporte-produccion, reporte-fechas
 $accesos = [
-  "ADM" => ["produccion", "pagos", "tareas", "usuarios", "reporte-produccion", "reporte-fechas"],
-  "COL" => ["produccion", "tareas", "reporte-produccion"],
-  "SUP" => ["tareas"]
+  "ADM" => ["home", "produccion", "pagos", "tareas", "usuarios", "reporte-produccion", "reporte-fechas"],
+  "COL" => ["home", "produccion", "tareas", "reporte-produccion"],
+  "SUP" => ["home", "tareas"]
 ];
 
 // Guardar la configuración de inicio de sesión

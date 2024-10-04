@@ -2,13 +2,8 @@
 
 <main>
     <div class="container-fluid px-4">
-    <h1>MÓDULO TAREAS</h1>
+    <h1>HOME</h1>
     </div>
-    <div>
-        <?php
-        $vistaActual
-        ?>
-        </div>
 </main>
 
 <?php require_once '../footer.php' ?>
