@@ -12,6 +12,28 @@ $accesos = [
   "SUP" => ["home", "tareas"]
 ];
 
+$accesosV2 = [
+  "ADM" => [
+    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "produccion", "texto" => "Producción", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "pagos", "texto" => "Pagos", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "tareas", "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "usuarios", "texto" => "Usuarios", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "reporte-produccion", "texto" => "Reporte de producción", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "reporte-fechas", "texto" => "Reporte de fechas", "icono" => "fa-solid fa-wallet"]    
+  ],
+  "SUP" => [
+    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "produccion", "texto" => "Producción", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "tareas", "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "reporte-produccion", "texto" => "Reporte de producción", "icono" => "fa-solid fa-wallet"]
+  ],
+  "COL" => [
+    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
+    ["ruta" => "tareas", "texto" => "Tareas", "icono" => "fa-solid fa-wallet"]
+  ]
+];
+
 // Guardar la configuración de inicio de sesión
 if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
   $sesion = [
@@ -85,9 +107,7 @@ if (isset($_POST['operation'])) {
           $sesion["nomusuario"] = $registro[0]['nomusuario'];
           $sesion["claveacceso"] = $registro[0]['claveacceso'];
           $sesion["perfil"] = $registro[0]['perfil'];
-          $sesion["accesos"] = $accesos[$registro[0]['perfil']];
-
-          $_SESSION['login'] = $sesion;
+          $sesion["accesos"] = $accesosV2[$registro[0]['perfil']]; // Actualización
         } else {
           $resultados["mensaje"] = "Error en la contraseña";
           $sesion["estado"] = false;

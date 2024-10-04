@@ -26,7 +26,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
   $encontrado = false;
   $i = 0;
   while(($i < count ($listaAcceso)) && !$encontrado){
-    if($listaAcceso[$i] == $vistaActual){
+    if($listaAcceso[$i]['ruta'] == $vistaActual){
       $encontrado = true;
     }
     $i++;
@@ -34,7 +34,7 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
 
   // Validamos si se encontró...
   if (!$encontrado){
-    header("Location: http://localhost/linofino/views/404.php");
+    header("Location: http://localhost/linofino/views/home/");
   }
 }
 ?>
@@ -96,9 +96,9 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
             <?php
             foreach ($listaAcceso as $acceso) {
               echo "
-              <a class='nav-link' href='http://localhost/linofino/views/{$acceso}'>
+              <a class='nav-link' href='http://localhost/linofino/views/{$acceso['ruta']}'>
               <div class='sb-nav-link-icon'><i class='fa-solid fa-plug-circle-check'></i></div>
-              {$acceso}
+              {$acceso['texto']}
             </a>
               ";
             }
