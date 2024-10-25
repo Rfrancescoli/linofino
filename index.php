@@ -34,11 +34,11 @@ if (isset($_SESSION['login']) && $_SESSION['login']['estado']){
                 <div class="card-body">
                   <form id="form-login" autocomplete="off">
                     <div class="form-floating mb-3">
-                      <input class="form-control" id="nomusuario" type="text" autofocus required />
+                      <input class="form-control" id="nomusuario" type="text" value="rmarcos@gmail.com" autofocus required />
                       <label for="nomusuario">Nombre de usuario</label>
                     </div>
                     <div class="form-floating mb-3">
-                      <input class="form-control" id="claveacceso" type="password" required/>
+                      <input class="form-control" id="claveacceso" value="SENATI123" type="password" required/>
                       <label for="claveacceso">Password</label>
                     </div>
                     <div class="form-check mb-3">

@@ -14,23 +14,19 @@ $accesos = [
 
 $accesosV2 = [
   "ADM" => [
-    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "produccion", "texto" => "Producción", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "pagos", "texto" => "Pagos", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "tareas", "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "usuarios", "texto" => "Usuarios", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "reporte-produccion", "texto" => "Reporte de producción", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "reporte-fechas", "texto" => "Reporte de fechas", "icono" => "fa-solid fa-wallet"]    
+    ["modulo" => "", "ruta" => "home", "visible" => true,"texto" => "Inicio", "icono" => "fa-solid fa-wallet"], 
+    ["modulo" => "usuarios", "ruta" => "listar-usuario", "visible" => true, "texto" => "Usuarios", "icono" => "fa-solid fa-wallet"], 
+    ["modulo" => "usuarios", "ruta" => "registrar-usuario", "visible" => false],
+    ["modulo" => "usuarios", "ruta" => "actualizar-usuario", "visible" => false],
+    
+    ["modulo" => "tareas", "ruta" => "listar-tarea", "visible" => true, "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
+    ["modulo" => "tareas", "ruta" => "registrar-tarea", "visible" => false]  
   ],
   "SUP" => [
-    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "produccion", "texto" => "Producción", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "tareas", "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "reporte-produccion", "texto" => "Reporte de producción", "icono" => "fa-solid fa-wallet"]
+    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"]
   ],
   "COL" => [
-    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
-    ["ruta" => "tareas", "texto" => "Tareas", "icono" => "fa-solid fa-wallet"]
+    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"]
   ]
 ];
 

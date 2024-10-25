@@ -25,15 +25,15 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
 
   $encontrado = false;
   $i = 0;
-  while(($i < count ($listaAcceso)) && !$encontrado){
-    if($listaAcceso[$i]['ruta'] == $vistaActual){
+  while (($i < count($listaAcceso)) && !$encontrado) {
+    if ($listaAcceso[$i]['ruta'] == $vistaActual) {
       $encontrado = true;
     }
     $i++;
   }
 
   // Validamos si se encontró...
-  if (!$encontrado){
+  if (!$encontrado) {
     header("Location: http://localhost/linofino/views/home/");
   }
 }
@@ -95,12 +95,14 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
             <div class="sb-sidenav-menu-heading">Módulos</div>
             <?php
             foreach ($listaAcceso as $acceso) {
-              echo "
-              <a class='nav-link' href='http://localhost/linofino/views/{$acceso['ruta']}'>
-              <div class='sb-nav-link-icon'><i class='fa-solid fa-plug-circle-check'></i></div>
-              {$acceso['texto']}
-            </a>
-              ";
+              if ($acceso['visible']) {
+                echo "
+                <a class='nav-link' href='http://localhost/linofino/views/{$acceso['modulo']}/{$acceso['ruta']}'>
+                <div class='sb-nav-link-icon'><i class='fa-solid fa-plug-circle-check'></i></div>
+                {$acceso['texto']}
+              </a>
+                ";
+              }
             }
             ?>
 

@@ -28,7 +28,7 @@
             </table>
           </div>
           <div class="card-footer">
-            <a href="registrar.php" class="btn btn-sm btn-primary">Registrar usuario</a>
+            <a href="./registrar-usuario" class="btn btn-sm btn-primary">Registrar usuario</a>
           </div>
         </div>
       </div> <!-- .col-md-12 -->

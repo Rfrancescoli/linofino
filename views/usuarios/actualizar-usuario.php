@@ -2,7 +2,7 @@
 
 <main>
     <div class="container-fluid px-4">
-    <h1>MÓDULO TAREAS</h1>
+    <h1>Actualizar Usuario</h1>
     </div>
     <div>
         <?php
