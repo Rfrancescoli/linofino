@@ -95,10 +95,10 @@ if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
             <div class="sb-sidenav-menu-heading">Módulos</div>
             <?php
             foreach ($listaAcceso as $acceso) {
-              if ($acceso['visible']) {
+              if ($acceso['sidebaroption'] == 'S') {
                 echo "
                 <a class='nav-link' href='http://localhost/linofino/views/{$acceso['modulo']}/{$acceso['ruta']}'>
-                <div class='sb-nav-link-icon'><i class='fa-solid fa-plug-circle-check'></i></div>
+                <div class='sb-nav-link-icon'><i class='{$acceso['icono']}'></i></div>
                 {$acceso['texto']}
               </a>
                 ";

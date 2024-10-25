@@ -6,7 +6,7 @@ header("Content-type: application/json; charset=utf-8");
 
 // Determina las vitas las cuales podrá utilizar
 // Producción, pagos, tareas, usuarios, reporte-produccion, reporte-fechas
-$accesos = [
+/* $accesos = [
   "ADM" => ["home", "produccion", "pagos", "tareas", "usuarios", "reporte-produccion", "reporte-fechas"],
   "COL" => ["home", "produccion", "tareas", "reporte-produccion"],
   "SUP" => ["home", "tareas"]
@@ -41,7 +41,7 @@ $accesosV2 = [
     ["modulo" => "", "ruta" => "home", "visible" => true, "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
     ["modulo" => "tareas", "ruta" => "listar-tarea", "visible" => true, "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
   ]
-];
+]; */
 
 // Guardar la configuración de inicio de sesión
 if (!isset($_SESSION['login']) || $_SESSION['login']['estado'] == false) {
@@ -116,7 +116,13 @@ if (isset($_POST['operation'])) {
           $sesion["nomusuario"] = $registro[0]['nomusuario'];
           $sesion["claveacceso"] = $registro[0]['claveacceso'];
           $sesion["perfil"] = $registro[0]['perfil'];
-          $sesion["accesos"] = $accesosV2[$registro[0]['perfil']]; // Actualización
+
+          //$sesion["accesos"] = $accesosV2[$registro[0]['perfil']]; // Actualización
+          
+          // Los accesos se obtienen desde una consulta
+          $accesos = $usuario->obtenerPermisos(["idperfil" => $registro[0]['idperfil']]);
+          $sesion["accesos"] = $accesos;
+
         } else {
           $resultados["mensaje"] = "Error en la contraseña";
           $sesion["estado"] = false;

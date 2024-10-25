@@ -55,10 +55,9 @@ BEGIN
         PE.apellidos, PE.nombres,
         US.nomusuario,
         US.claveacceso,
-        US.perfil
+        US.perfil,
+        US.idperfil
         FROM usuarios US
         INNER JOIN personas PE ON PE.idpersona = US.idpersona
         WHERE US.nomusuario = _nomusuario;
 END //
-
-select * from usuarios;

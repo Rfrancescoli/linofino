@@ -30,6 +30,11 @@ CREATE TABLE usuarios
 ALTER TABLE usuarios DROP CONSTRAINT ck_perfil_usu;
 ALTER TABLE usuarios ADD CONSTRAINT ck_perfil_usu CHECK (perfil IN ('ADM', 'COL', 'SUP'));
 
+ALTER TABLE usuarios ADD idperfil INT NULL;
+-- Actualizar idperfil en la tabla usuarios
+ALTER TABLE usuarios MODIFY COLUMN idperfil INT NOT NULL;
+ALTER TABLE usuarios ADD CONSTRAINT fk_idperfil_usu FOREIGN KEY (idperfil) REFERENCES perfiles (idperfil);
+
 CREATE TABLE tareas
 (
 	idtarea				INT AUTO_INCREMENT PRIMARY KEY,
@@ -55,11 +60,6 @@ CREATE TABLE jornadas
     CONSTRAINT ck_horas_jor CHECK (horainicio < horatermino)
 )ENGINE = INNODB;
 
-CREATE TABLE roles (
-    idroles				INT AUTO_INCREMENT PRIMARY KEY,
-    nombre 				VARCHAR(10) NOT NULL UNIQUE  -- ADM, SUP, COL
-) ENGINE = INNODB;
-
 CREATE TABLE detalletareas
 (
 	iddetalle			INT AUTO_INCREMENT PRIMARY KEY,
@@ -81,13 +81,114 @@ CREATE TABLE detalletareas
 
 select * from personas;
 
-CREATE TABLE accesos (
-    idacceso 			INT AUTO_INCREMENT PRIMARY KEY,
-    idroles 			INT NOT NULL,
-    modulo 				VARCHAR(50) NULL,
-    ruta 				VARCHAR(100) NOT NULL,
-    visible 			BOOLEAN NOT NULL,
-    texto 				VARCHAR(100) NULL,
-    icono 				VARCHAR(100) NULL,
-    CONSTRAINT fk_idrole_acceso FOREIGN KEY (idroles) REFERENCES roles (idroles)
+CREATE TABLE modulos
+(
+	idmodulo		INT AUTO_INCREMENT PRIMARY KEY,
+    modulo			VARCHAR(30)			NOT NULL,
+    create_at		DATETIME			NOT NULL DEFAULT NOW(),
+    CONSTRAINT uk_modulo_mod UNIQUE (modulo)
 ) ENGINE = INNODB;
+
+INSERT INTO modulos (modulo) VALUES
+	('jornadas'), -- 1
+    ('pagos'), -- 2
+    ('produccion'), -- 3
+    ('reportes'), -- 4
+    ('usuarios'), -- 5
+    ('tareas'); -- 6
+    
+CREATE TABLE vistas
+(
+	idvista			INT AUTO_INCREMENT PRIMARY KEY,
+    idmodulo		INT					NULL,
+    ruta			VARCHAR(50)			NOT NULL,
+    sidebaroption	CHAR(1)				NOT NULL,
+    texto			VARCHAR(20)			NULL,
+    icono			VARCHAR(20)			NULL,
+    CONSTRAINT fk_idmodulo_vis FOREIGN KEY (idmodulo) REFERENCES modulos (idmodulo),
+    CONSTRAINT uk_ruta_vis	UNIQUE(ruta),
+    CONSTRAINT ck_sidebaroption_vis CHECK (sidebaroption IN ('S', 'N'))
+) ENGINE = INNODB;
+
+-- HOME
+INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
+	(NULL, 'home', 'S', 'Inicio', 'fa-solid fa-wallet');
+-- JORNADAS
+INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
+	(1, 'listar-jornada', 'S', 'Jornadas', 'fa-solid fa-wallet');
+-- PAGOS
+INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
+	(2, 'listar-pago', 'S', 'Pagos', 'fa-solid fa-wallet');
+-- PRODUCCION
+INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
+	(3, 'listar-produccion', 'S', 'Producción', 'fa-solid fa-wallet');
+-- REPORTES
+INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
+	(4, 'reporte-diario', 'S', 'Reportes', 'fa-solid fa-wallet');
+-- USUARIOS
+INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
+	(5, 'listar-usuario', 'S', 'Usuarios', 'fa-solid fa-wallet'),
+    (5, 'registrar-usuario', 'N', NULL, NULL),
+    (5, 'actualizar-usuario', 'N',  NULL, NULL);
+-- TAREAS
+INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
+	(6, 'listar-tarea', 'S', 'Tareas', 'fa-solid fa-wallet'),
+    (6, 'registrar-tarea', 'N', NULL, NULL);
+
+CREATE TABLE perfiles
+(
+	idperfil			INT AUTO_INCREMENT PRIMARY KEY,
+    perfil				VARCHAR(30) NOT NULL,
+    nombrecorto			CHAR(3)		NOT NULL,
+    create_at			DATETIME 	NOT NULL DEFAULT NOW(),
+    CONSTRAINT uk_perfil_per UNIQUE (perfil),
+    CONSTRAINT uk_nombrecorto_per UNIQUE (nombrecorto)
+) ENGINE = INNODB;
+
+INSERT INTO perfiles (perfil, nombrecorto) VALUES
+	('Administrador', 'ADM'), 
+	('Supervisor', 'SUP'), 
+	('Colaborador', 'COL');
+
+CREATE TABLE permisos
+(
+	idpermiso			INT AUTO_INCREMENT PRIMARY KEY,
+    idperfil			INT 				NOT NULL,
+    idvista				INT 				NOT NULL,
+    create_at			DATETIME			NOT NULL DEFAULT NOW(),
+    CONSTRAINT fk_idperfil_per FOREIGN KEY (idperfil) REFERENCES perfiles (idperfil),
+    CONSTRAINT fk_idvisita_per FOREIGN KEY (idvista) REFERENCES vistas (idvista),
+    CONSTRAINT uk_vista_per UNIQUE (idperfil, idvista)
+)ENGINE = INNODB;
+
+SELECT * FROM VISTAS;
+SELECT * FROM PERMISOS;
+
+-- Administrador
+INSERT INTO permisos (idperfil, idvista) VALUES
+	(1, 1),
+    (1, 2),
+    (1, 3),
+    (1, 4),
+    (1, 5),
+    (1, 6),
+    (1, 7),
+    (1, 8),
+    (1, 9),
+    (1, 10);
+-- Supervisor
+INSERT INTO permisos (idperfil, idvista) VALUES
+	(2, 1),
+    (2, 4),
+    (2, 5),
+    (2, 9),
+    (2, 3);
+-- Colaborador
+INSERT INTO permisos (idperfil, idvista) VALUES
+	(3, 1),
+	(3, 9);
+
+    -- procedure al que yo le mande el codigo de perfil
+    -- procedure que reciba el codigo y devuelve el tdetalle cn todo el acceso que yo tengo permitido ingresar
+    -- tengo que saber cual es el modulo y cual es la vista
+    -- procedure que reciba una foranea de perfil

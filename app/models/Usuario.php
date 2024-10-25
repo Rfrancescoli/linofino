@@ -12,7 +12,7 @@ class Usuario extends Conexion
     $this->pdo = parent::getConexion();
   }
 
-  public function registrarUsuario($params = []):int
+  public function registrarUsuario($params = []): int
   {
     try {
       $cmd = $this->pdo->prepare("CALL spu_usuarios_registrar(@idusuario,?,?,?,?)");
@@ -34,25 +34,46 @@ class Usuario extends Conexion
   }
 
   /* Retorna una lista de usuarios */
-  public function getAll():array{
+  public function getAll(): array
+  {
     return parent::getData("spu_usuarios_listar");
   }
 
   /* Retorna el registro del usuario indicado */
-  public function login($params = []):array{
-    try{
+  public function login($params = []): array
+  {
+    try {
       $cmd = $this->pdo->prepare("call spu_usuarios_login(?)");
       $cmd->execute(
         array($params['nomusuario'])
       );
       return $cmd->fetchAll(PDO::FETCH_ASSOC);
-    }catch(Exception $e){
+    } catch (Exception $e) {
       error_log("Error: " . $e->getMessage());
+    }
+  }
+
+  /**
+   * Obtiene una lista de vistas a las que el usuario puede acceder
+   * @param array $params El idperfil se debe enviar coo arreglo asociativo
+   * @return array retorna una coleccion de datos
+   */
+  public function obtenerPermisos($params = []): array
+  {
+    try {
+      $cmd = $this->pdo->prepare("CALL spu_obtener_acceso_usuario(?)");
+      $cmd->execute(
+        array($params['idperfil'])
+      );
+      return $cmd->fetchAll(PDO::FETCH_ASSOC);
+    } catch (Exception $e) {
+      error_log("Error: " . $e->getMessage());
+      return [];
     }
   }
 }
 
-$usuario = new Usuario();
+// $usuario = new Usuario();
 /* var_dump($usuario->login(['nomusuario' => 'rmarcos@gmail.com']));
  *//*
 $id = $usuario->registrarUsuario([
