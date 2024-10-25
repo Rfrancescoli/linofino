@@ -1,3 +1,15 @@
 RewriteEngine On
+
+# URL amigables
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}.php -f
+RewriteRule ^(.*)$ $1.php [L]
+
+# Evitar acceder a carpetas que NO tengan un index.php/index.html
 Options All -Indexes
-# RewriteRule ^([a-zA-Z0-9/ñÑ-]+)$ index.php?views=$1
+
+# Manejo de excepciones en el servidor 404
+ErrorDocument 400 /linofino/unauthorized.php
+ErrorDocument 401 /linofino/unauthorized.php
+ErrorDocument 403 /linofino/unauthorized.php
+ErrorDocument 404 /linofino/404.php
