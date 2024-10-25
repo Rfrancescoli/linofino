@@ -2,8 +2,13 @@
 
 <main>
     <div class="container-fluid px-4">
-    <h1>MÓDULO PAGOS</h1>
+    <h1>Listar Jornadas</h1>
     </div>
+    <div>
+        <?php
+        $vistaActual
+        ?>
+        </div>
 </main>
 
 <?php require_once '../footer.php' ?>

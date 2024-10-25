@@ -2,8 +2,13 @@
 
 <main>
     <div class="container-fluid px-4">
-    <h1>reporte produccion</h1>
+    <h1>Reporte Intervalo</h1>
     </div>
+    <div>
+        <?php
+        $vistaActual
+        ?>
+        </div>
 </main>
 
 <?php require_once '../footer.php' ?>

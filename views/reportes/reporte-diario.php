@@ -2,11 +2,10 @@
 
 <main>
     <div class="container-fluid px-4">
-    <h1>MÓDULO PRODUCCIÓN</h1>
+    <h1>Reporte Diario</h1>
     </div>
-
     <div>
-        <?
+        <?php
         $vistaActual
         ?>
         </div>

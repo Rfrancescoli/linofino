@@ -55,6 +55,11 @@ CREATE TABLE jornadas
     CONSTRAINT ck_horas_jor CHECK (horainicio < horatermino)
 )ENGINE = INNODB;
 
+CREATE TABLE roles (
+    idroles				INT AUTO_INCREMENT PRIMARY KEY,
+    nombre 				VARCHAR(10) NOT NULL UNIQUE  -- ADM, SUP, COL
+) ENGINE = INNODB;
+
 CREATE TABLE detalletareas
 (
 	iddetalle			INT AUTO_INCREMENT PRIMARY KEY,
@@ -75,3 +80,14 @@ CREATE TABLE detalletareas
 )ENGINE = INNODB;
 
 select * from personas;
+
+CREATE TABLE accesos (
+    idacceso 			INT AUTO_INCREMENT PRIMARY KEY,
+    idroles 			INT NOT NULL,
+    modulo 				VARCHAR(50) NULL,
+    ruta 				VARCHAR(100) NOT NULL,
+    visible 			BOOLEAN NOT NULL,
+    texto 				VARCHAR(100) NULL,
+    icono 				VARCHAR(100) NULL,
+    CONSTRAINT fk_idrole_acceso FOREIGN KEY (idroles) REFERENCES roles (idroles)
+) ENGINE = INNODB;

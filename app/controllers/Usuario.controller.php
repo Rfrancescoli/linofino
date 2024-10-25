@@ -14,19 +14,32 @@ $accesos = [
 
 $accesosV2 = [
   "ADM" => [
-    ["modulo" => "", "ruta" => "home", "visible" => true,"texto" => "Inicio", "icono" => "fa-solid fa-wallet"], 
-    ["modulo" => "usuarios", "ruta" => "listar-usuario", "visible" => true, "texto" => "Usuarios", "icono" => "fa-solid fa-wallet"], 
+    ["modulo" => "", "ruta" => "home", "visible" => true, "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
+
+    ["modulo" => "jornadas", "ruta" => "listar-jornada", "visible" => true, "texto" => "Jornadas", "icono" => "fa-solid fa-wallet"],
+
+    ["modulo" => "pagos", "ruta" => "listar-pago", "visible" => true, "texto" => "Pagos", "icono" => "fa-solid fa-wallet"],
+
+    ["modulo" => "produccion", "ruta" => "listar-produccion", "visible" => true, "texto" => "Producción", "icono" => "fa-solid fa-wallet"],
+
+    ["modulo" => "reportes", "ruta" => "reporte-diario", "visible" => true, "texto" => "Reportes", "icono" => "fa-solid fa-wallet"],
+
+    ["modulo" => "usuarios", "ruta" => "listar-usuario", "visible" => true, "texto" => "Usuarios", "icono" => "fa-solid fa-wallet"],
     ["modulo" => "usuarios", "ruta" => "registrar-usuario", "visible" => false],
     ["modulo" => "usuarios", "ruta" => "actualizar-usuario", "visible" => false],
-    
+
     ["modulo" => "tareas", "ruta" => "listar-tarea", "visible" => true, "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
-    ["modulo" => "tareas", "ruta" => "registrar-tarea", "visible" => false]  
+    ["modulo" => "tareas", "ruta" => "registrar-tarea", "visible" => false]
   ],
   "SUP" => [
-    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"]
+    ["modulo" => "", "ruta" => "home", "visible" => true, "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
+    ["modulo" => "produccion", "ruta" => "listar-produccion", "visible" => true, "texto" => "Producción", "icono" => "fa-solid fa-wallet"],
+    ["modulo" => "reportes", "ruta" => "reporte-diario", "visible" => true, "texto" => "Reportes", "icono" => "fa-solid fa-wallet"],
+    ["modulo" => "tareas", "ruta" => "listar-tarea", "visible" => true, "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
   ],
   "COL" => [
-    ["ruta" => "home", "texto" => "Inicio", "icono" => "fa-solid fa-wallet"]
+    ["modulo" => "", "ruta" => "home", "visible" => true, "texto" => "Inicio", "icono" => "fa-solid fa-wallet"],
+    ["modulo" => "tareas", "ruta" => "listar-tarea", "visible" => true, "texto" => "Tareas", "icono" => "fa-solid fa-wallet"],
   ]
 ];
 
@@ -53,7 +66,7 @@ if (isset($_GET['operation'])) {
     case 'getAll':
       echo json_encode($usuario->getAll());
       break;
-    
+
     case 'destroy':
       session_destroy();
       session_unset();
@@ -117,7 +130,7 @@ if (isset($_POST['operation'])) {
         $sesion["nombres"] = "";
       }
 
-      $_SESSION ['login'] = $sesion;
+      $_SESSION['login'] = $sesion;
       echo json_encode($resultados);
       //echo json_encode($_SESSION['login']);
       break;
