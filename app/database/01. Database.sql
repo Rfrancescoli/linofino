@@ -33,12 +33,14 @@ CREATE TABLE usuarios
     nomusuario			VARCHAR(30)			NOT NULL,
     claveacceso			VARCHAR(70)			NOT NULL,
     perfil				CHAR(3)				NOT NULL, -- ADM | COL | AST
-    idperfil			INT 				NOT NULL,
+    idperfil			INT 				NULL,
     CONSTRAINT fk_idpersonausu FOREIGN KEY (idpersona) REFERENCES personas (idpersona),
     CONSTRAINT uk_nomusuario_usu UNIQUE (nomusuario),
     CONSTRAINT ck_perfil_usu CHECK (perfil IN ('ADM', 'COL', 'SUP')),
     CONSTRAINT fk_idperfil_usu FOREIGN KEY (idperfil) REFERENCES perfiles (idperfil)
 )ENGINE = INNODB;
+
+-- alter table usuarios modify column idperfil int null;
 
 -- ALTER TABLE usuarios DROP CONSTRAINT ck_perfil_usu;
 -- ALTER TABLE usuarios ADD CONSTRAINT ck_perfil_usu CHECK (perfil IN ('ADM', 'COL', 'SUP'));

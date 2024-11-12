@@ -3,7 +3,7 @@ USE linofino;
 CALL spu_personas_registrar(@idpersona, 'Contreras Anicama', 'Luis', '987654321', '87654321', '');
 SELECT @idpersona AS 'idpersona';
 
-CALL spu_usuarios_registrar(@idusuario, 1, 'ruben', '123456789', 'ADM', 1);
+CALL spu_usuarios_registrar(@idusuario, 4, 'marcos', '123456789', 'ADM');
 SELECT @idusuario AS 'idusuario';
 
 -- claveacceso: SENATI123

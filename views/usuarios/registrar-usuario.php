@@ -90,7 +90,7 @@
                 <div class="col-md-6">
                   <button type="submit" class="btn btn-sm btn-primary">Registrar</button>
                   <button type="reset" class="btn btn-sm btn-outline-secondary">Cancelar</button>
-                  <a href="index.php" class="btn btn-sm btn-outline-primary">Mostrar lista</a>
+                  <a href="./listar-usuario.php" class="btn btn-sm btn-outline-primary">Mostrar lista</a>
                 </div>
               </div>
             </div>
