@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS linofino;
 CREATE DATABASE linofino;
 USE linofino;
 
@@ -15,6 +16,16 @@ CREATE TABLE personas
 -- ALTER TABLE personas ADD `direccion` VARCHAR(100) NOT NULL AFTER `dni`;
 -- ALTER TABLE personas ADD `TELEFONO` char(9) NOT NULL AFTER `nombres`;
 
+CREATE TABLE perfiles
+(
+	idperfil			INT AUTO_INCREMENT PRIMARY KEY,
+    perfil				VARCHAR(30) NOT NULL,
+    nombrecorto			CHAR(3)		NOT NULL,
+    create_at			DATETIME 	NOT NULL DEFAULT NOW(),
+    CONSTRAINT uk_perfil_per UNIQUE (perfil),
+    CONSTRAINT uk_nombrecorto_per UNIQUE (nombrecorto)
+) ENGINE = INNODB;
+
 CREATE TABLE usuarios
 (
 	idusuario			INT AUTO_INCREMENT PRIMARY KEY,
@@ -22,18 +33,20 @@ CREATE TABLE usuarios
     nomusuario			VARCHAR(30)			NOT NULL,
     claveacceso			VARCHAR(70)			NOT NULL,
     perfil				CHAR(3)				NOT NULL, -- ADM | COL | AST
+    idperfil			INT 				NOT NULL,
     CONSTRAINT fk_idpersonausu FOREIGN KEY (idpersona) REFERENCES personas (idpersona),
     CONSTRAINT uk_nomusuario_usu UNIQUE (nomusuario),
-    CONSTRAINT ck_perfil_usu CHECK (perfil IN ('ADM', 'COL', 'SUP'))
+    CONSTRAINT ck_perfil_usu CHECK (perfil IN ('ADM', 'COL', 'SUP')),
+    CONSTRAINT fk_idperfil_usu FOREIGN KEY (idperfil) REFERENCES perfiles (idperfil)
 )ENGINE = INNODB;
 
-ALTER TABLE usuarios DROP CONSTRAINT ck_perfil_usu;
-ALTER TABLE usuarios ADD CONSTRAINT ck_perfil_usu CHECK (perfil IN ('ADM', 'COL', 'SUP'));
+-- ALTER TABLE usuarios DROP CONSTRAINT ck_perfil_usu;
+-- ALTER TABLE usuarios ADD CONSTRAINT ck_perfil_usu CHECK (perfil IN ('ADM', 'COL', 'SUP'));
 
-ALTER TABLE usuarios ADD idperfil INT NULL;
+-- ALTER TABLE usuarios ADD idperfil INT NULL;
 -- Actualizar idperfil en la tabla usuarios
-ALTER TABLE usuarios MODIFY COLUMN idperfil INT NOT NULL;
-ALTER TABLE usuarios ADD CONSTRAINT fk_idperfil_usu FOREIGN KEY (idperfil) REFERENCES perfiles (idperfil);
+-- ALTER TABLE usuarios MODIFY COLUMN idperfil INT NOT NULL;
+-- ALTER TABLE usuarios ADD CONSTRAINT fk_idperfil_usu FOREIGN KEY (idperfil) REFERENCES perfiles (idperfil);
 
 CREATE TABLE tareas
 (
@@ -78,8 +91,6 @@ CREATE TABLE detalletareas
     CONSTRAINT fk_idusucaja_dta FOREIGN KEY (idusucaja) REFERENCES usuarios (idusuario),
     CONSTRAINT ck_pagado_dta CHECK (pagado IN ('S', 'N'))
 )ENGINE = INNODB;
-
-select * from personas;
 
 CREATE TABLE modulos
 (
@@ -134,16 +145,6 @@ INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
 INSERT INTO vistas (idmodulo, ruta, sidebaroption, texto, icono) VALUES
 	(6, 'listar-tarea', 'S', 'Tareas', 'fa-solid fa-wallet'),
     (6, 'registrar-tarea', 'N', NULL, NULL);
-
-CREATE TABLE perfiles
-(
-	idperfil			INT AUTO_INCREMENT PRIMARY KEY,
-    perfil				VARCHAR(30) NOT NULL,
-    nombrecorto			CHAR(3)		NOT NULL,
-    create_at			DATETIME 	NOT NULL DEFAULT NOW(),
-    CONSTRAINT uk_perfil_per UNIQUE (perfil),
-    CONSTRAINT uk_nombrecorto_per UNIQUE (nombrecorto)
-) ENGINE = INNODB;
 
 INSERT INTO perfiles (perfil, nombrecorto) VALUES
 	('Administrador', 'ADM'), 

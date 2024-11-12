@@ -8,7 +8,8 @@ CREATE PROCEDURE `spu_usuarios_registrar`
     IN _idpersona		INT,
 	IN _nomusuario		VARCHAR(30),
     IN _claveacceso		VARCHAR(70),
-    IN _perfil			CHAR(3)
+    IN _perfil			CHAR(3),
+    IN _idperfil		INT
 )
 BEGIN
 	DECLARE existe_error INT DEFAULT 0;
@@ -18,8 +19,8 @@ BEGIN
         SET existe_error = 1;
 		END;
         
-    INSERT INTO usuarios (idpersona, nomusuario, claveacceso, perfil) 
-    VALUES (_idpersona, _nomusuario, _claveacceso, _perfil);
+    INSERT INTO usuarios (idpersona, nomusuario, claveacceso, perfil, idperfil) 
+    VALUES (_idpersona, _nomusuario, _claveacceso, _perfil, _idperfil);
     
     IF existe_error = 1 THEN
 		SET _idusuario = -1;
@@ -27,7 +28,7 @@ BEGIN
 		SET _idusuario = LAST_INSERT_ID();
     END IF;
 END //
-
+DELIMITER;
 
 DROP PROCEDURE IF EXISTS `spu_usuarios_listar`;
 DELIMITER //
@@ -37,10 +38,11 @@ BEGIN
 		US.idusuario,
         PE.apellidos, PE.nombres, PE.telefono, PE.dni, PE.direccion,
         US.nomusuario, US.perfil
-		FROM usuarios US
-		INNER JOIN personas PE ON PE.idpersona = US.idpersona
-		ORDER BY US.idusuario DESC;
+	FROM usuarios US
+	INNER JOIN personas PE ON PE.idpersona = US.idpersona
+	ORDER BY US.idusuario DESC;
 END //
+DELIMITER ;
 
 -- Creado: Viernes 04/10/2024
 -- Login (2 pasos)
@@ -61,3 +63,4 @@ BEGIN
         INNER JOIN personas PE ON PE.idpersona = US.idpersona
         WHERE US.nomusuario = _nomusuario;
 END //
+DELIMITER ;
